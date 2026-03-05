@@ -1,7 +1,7 @@
-import BalanceCard from "../components/dashboard/BalanceCard"
-import IncomeExpenses from "../components/dashboard/IncomeExpenses"
-import TransactionList from "../components/dashboard/TransactionList"
-import AddTransaction from "../components/dashboard/AddTransaction"
+import BalanceCard from "../components/Dashboard/Balance"
+import IncomeExpense from "../components/Dashboard/IncomeExpense"
+import TransactionList from "../components/Dashboard/TransactionList"
+import AddTransaction from "../components/Dashboard/AddTransaction"
 
 export default function Dashboard({
  transactions,
@@ -15,7 +15,7 @@ export default function Dashboard({
     <div className="max-w-7xl mx-auto p-4 space-y-6">
       <BalanceCard balance={balance} />
     
-      <IncomeExpenses income={income} expense={expenses} />
+      <IncomeExpense income={income} expense={expenses} />
 
       <div className="grid gap-6 md:grid-cols-2">
         <TransactionList 

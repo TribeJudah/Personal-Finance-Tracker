@@ -1,6 +1,6 @@
-import TransactionList from "./TransactionList"
+import transaction from "./TransactionList"
 
-export default function TransactionList({ transactions, onDelete }) {
+export default function Transaction({ transactions, onDelete }) {
   const isIncome = transaction.amount > 0
 
   return (

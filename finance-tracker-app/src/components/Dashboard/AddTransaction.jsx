@@ -1,4 +1,27 @@
-export default function AddTransaction() {
+import { useState } from "react"
+
+export default function AddTransaction({ onAdd }) {
+  const [text, setText] = useState("")
+  const [amount, setAmount] = useState("")
+  const [category, setCategory] = useState("")
+
+  const handleSubmit = (e) => {
+ e.preventDefault()
+
+if (!text || !amount) return
+
+    onAdd({
+      id: Date.now(),
+      text,
+      amount: +amount,
+      category,
+    })
+
+    setText("")
+    setAmount("")
+    setCategory("")
+  }
+
   return (
     <div className="bg-white shadow rounded-xl p-4">
       <h3 className="font-semibold mb-3">Add Transaction</h3>

@@ -30,6 +30,7 @@ export default function App() {
   const balance = income + expenses
 
   return (
+    <>
     <Dashboard
       transactions={transactions}
       income={income}
@@ -38,5 +39,6 @@ export default function App() {
       onAdd={addTransaction}
       onDelete={deleteTransaction}
     />
+    </>
   )
 }
