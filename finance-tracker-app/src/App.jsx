@@ -1,46 +1,42 @@
-import { useState } from 'react'
-import Header from "./components/Header"
-import Balance from "./components/Balance"
-import IncomeExpenses from "./components/IncomeExpenses"
-import TransactionList from "./components/TransactionList"
-import AddTransaction from "./components/AddTransaction"
-import './App.css'
+import { useEffect, useState } from "react"
+import Landing from "./pages/landing"
+import Dashboard from "./pages/dashboard"
 
-function App() {
-  const [transactions, setTransactions] = useState([]);
+export default function App() {
+  const [transactions, setTransactions] = useState(() => {
+    const saved = localStorage.getItem("transactions")
+    return saved ? JSON.parse(saved) : []
+  })
+
+  // Persist data
+  useEffect(() => {
+    localStorage.setItem("transactions", JSON.stringify(transactions))
+  }, [transactions])
+
+  // Add transaction
   const addTransaction = (transaction) => {
-    setTransactions([... transactions, transaction])
+    setTransactions(prev => [transaction, ...prev])
   }
-  <AddTransaction onAdd={addTransaction} />
 
-  { id: 1, text; "Salary", amount; 500 }
+  // Delete transaction
+  const deleteTransaction = (id) => {
+    setTransactions(prev => prev.filter(tx => tx.id !== id))
+  }
 
-const amounts = transactions.map(t => t.amount)
-
-const income = amounts
-  .filter(a => a > 0)
-  .reduce((acc, a) => acc + a, 0)
-
-const expense = amounts
-  .filter(a => a < 0)
-  .reduce((acc, a) => acc + a, 0)
-
-const balance = income + expense
+  // Calculations
+  const amounts = transactions.map(tx => tx.amount)
+  const income = amounts.filter(a => a > 0).reduce((a, b) => a + b, 0)
+  const expenses = amounts.filter(a => a < 0).reduce((a, b) => a + b, 0)
+  const balance = income + expenses
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <h1 className="text-3xl font-bold">Personal Finance Tracker</h1>
-
-      <div className="max-w-md mx-auto p-4">
-      <Header />
-      <Balance />
-      <IncomeExpenses />
-      <TransactionList />
-      <AddTransaction />
-      </div>
-    </div>
-
+    <Dashboard
+      transactions={transactions}
+      income={income}
+      expenses={expenses}
+      balance={balance}
+      onAdd={addTransaction}
+      onDelete={deleteTransaction}
+    />
   )
 }
-
-export default App
